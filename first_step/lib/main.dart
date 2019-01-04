@@ -6,10 +6,7 @@ void main() => runApp(myApp());
 class myApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Startup Name Generator',
-      home: RandomWords()
-    );
+    return MaterialApp(title: 'Startup Name Generator', home: RandomWords());
   }
 }
 
@@ -23,13 +20,13 @@ class RandomWordsState extends State<RandomWords> {
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-      title: Text('Startup Name Generator'),
-    ),
-    body: _buildSuggestions(),
-  );
+      appBar: AppBar(
+        title: Text('Startup Name Generator')
+      ),
+      body: _buildSuggestions(),
+    );
   }
 
   Widget _buildSuggestions() {
@@ -47,11 +44,11 @@ class RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildRow(WordPair pair) {
-  return ListTile(
-    title: Text(
-      pair.asPascalCase,
-      style: _biggerFont,
-    ),
-  );
-}
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+    );
+  }
 }
