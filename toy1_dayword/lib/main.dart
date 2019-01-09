@@ -25,7 +25,7 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  final wordPair = WordPair.random();
+  String wordPair = WordPair.random().asPascalCase;
 
   Widget build(BuildContext context) {
     return Center(
@@ -34,9 +34,29 @@ class RandomWordsState extends State<RandomWords> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Text(
-            wordPair.asPascalCase,
+            wordPair,
             style: TextStyle(fontSize: 25.0),
           ),
+          new Padding(
+            padding: EdgeInsets.all(20.0),
+          ),
+          new RaisedButton(
+            child: new Text(
+              'Next Word',
+              style: TextStyle(fontSize: 20.0, color: Colors.white),
+            ),
+            onPressed: () {
+              setState((){
+                wordPair = WordPair.random().asPascalCase;
+              });
+            },
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(20.0)
+            ),
+            color: Colors.black26,
+            elevation: 4.0,
+            splashColor: Colors.black87,
+          )
         ],
       ),
     );
