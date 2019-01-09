@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
+import 'package:random_words/random_words.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,14 +9,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-          appBar: AppBar(title: Text('Day Word')),
-          body: new RandomWords()
-        ));
+      title: 'Day Word',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(title: Text('Day Word')),
+        body: new RandomWords()
+      )
+    );
   }
 }
 
@@ -25,10 +26,10 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  String wordPair;
+  String displayWord;
 
   void initState(){
-    wordPair = WordPair.random().asPascalCase;
+    displayWord = generateNoun().take(1).first.toString();
   }
 
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class RandomWordsState extends State<RandomWords> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Text(
-            wordPair,
+            displayWord,
             style: TextStyle(fontSize: 25.0),
           ),
           new Padding(
@@ -51,7 +52,7 @@ class RandomWordsState extends State<RandomWords> {
             ),
             onPressed: () {
               setState((){
-                wordPair = WordPair.random().asPascalCase;
+                displayWord = generateNoun().take(1).first.toString();
               });
             },
             shape: new RoundedRectangleBorder(
