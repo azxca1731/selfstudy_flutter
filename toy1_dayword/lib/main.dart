@@ -25,7 +25,11 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  String wordPair = WordPair.random().asPascalCase;
+  String wordPair;
+
+  void initState(){
+    wordPair = WordPair.random().asPascalCase;
+  }
 
   Widget build(BuildContext context) {
     return Center(
