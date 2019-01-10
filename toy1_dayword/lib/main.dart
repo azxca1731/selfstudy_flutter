@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:random_words/random_words.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 void main() => runApp(MyApp());
 
@@ -45,6 +48,7 @@ class RandomWordsState extends State<RandomWords> {
           new Padding(
             padding: EdgeInsets.all(20.0),
           ),
+          new WordMeaning(),
           new RaisedButton(
             child: new Text(
               'Next Word',
@@ -64,6 +68,58 @@ class RandomWordsState extends State<RandomWords> {
           )
         ],
       ),
+    );
+  }
+}
+
+class WordDictionary {
+  final String meaning;
+  final String example;
+
+  WordDictionary({this.meaning, this.example});
+
+  factory WordDictionary.fromJson(Map<String, dynamic> json){
+    final String meaning = json['phrase']['text'];
+    final String example = json['meanings'][0]['text'];
+    return WordDictionary(
+      meaning: meaning,
+      example: example
+    );
+  }
+}
+
+class WordMeaning extends StatefulWidget {
+  WordMeaningState createState() => new WordMeaningState();
+}
+
+class WordMeaningState extends State<WordMeaning> {
+  
+  Future<WordDictionary> fetchData() async {
+    final String url = "https://glosbe.com/gapi/translate?from=eng&dest=kor&format=json&pretty=true&phrase=berry";
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonBody = json.decode(response.body);
+      return WordDictionary.fromJson(jsonBody['tuc'][0]);
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (context, snapshot) {
+        if(snapshot.hasData) {
+          final meaning = snapshot.data.meaning;
+          final example = snapshot.data.example;
+          return Column(
+            children: <Widget>[
+              new Text(meaning),
+              new Text(example)
+            ]);
+        }
+      },
     );
   }
 }
