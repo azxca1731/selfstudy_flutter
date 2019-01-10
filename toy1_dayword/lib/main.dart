@@ -48,7 +48,7 @@ class RandomWordsState extends State<RandomWords> {
           new Padding(
             padding: EdgeInsets.all(20.0),
           ),
-          new WordMeaning(),
+          new WordMeaning(word: displayWord),
           new RaisedButton(
             child: new Text(
               'Next Word',
@@ -89,13 +89,16 @@ class WordDictionary {
 }
 
 class WordMeaning extends StatefulWidget {
+  final String word;
+  WordMeaning({Key key, this.word}) : super(key: key);
+
   WordMeaningState createState() => new WordMeaningState();
 }
 
 class WordMeaningState extends State<WordMeaning> {
   
-  Future<WordDictionary> fetchData() async {
-    final String url = "https://glosbe.com/gapi/translate?from=eng&dest=kor&format=json&pretty=true&phrase=berry";
+  Future<WordDictionary> fetchData(String word) async {
+    final String url = "https://glosbe.com/gapi/translate?from=eng&dest=kor&format=json&pretty=true&phrase=$word";
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -108,7 +111,7 @@ class WordMeaningState extends State<WordMeaning> {
 
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchData(),
+      future: fetchData(widget.word),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           final meaning = snapshot.data.meaning;
