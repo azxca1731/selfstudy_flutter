@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './text_control.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text("Assignment"),
         ),
-        body: new Text('hello'),
+        body: TextControl(),
       ),
     );
   }
