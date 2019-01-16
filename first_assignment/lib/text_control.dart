@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 import './text_output.dart';
 
 class TextControl extends StatefulWidget {
@@ -23,15 +24,21 @@ class _TextControlState extends State<TextControl> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         RaisedButton(
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              word = generateWordPairs().take(1).first.asPascalCase.toString();
+            });
+          },
           child: Text('Random'),
         ),
         TextOutput(word: word)
       ],
-    );
+    ));
   }
 }
