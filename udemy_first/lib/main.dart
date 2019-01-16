@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       appBar: AppBar(
         title: Text('NewBie App'),
       ),
-      body: ProductManager('fisrt start'),
+      body: ProductManager(),
     ));
   }
 }
