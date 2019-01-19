@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './product_manager.dart';
+
+import './pages/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       appBar: AppBar(
         title: Text('NewBie App'),
       ),
-      body: ProductManager(),
+      body: HomePage(),
     ));
   }
 }
