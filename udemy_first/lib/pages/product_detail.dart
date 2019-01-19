@@ -25,7 +25,7 @@ class DetailPage extends StatelessWidget {
               color: Theme.of(context).accentColor,
               child: Text('Back'),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
             ),
           ),

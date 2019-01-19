@@ -19,15 +19,15 @@ class Products extends StatelessWidget {
               FlatButton(
                 child: Text('Detail'),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.push<bool>(
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => DetailPage(
                             title: product[index]['title'],
-                            imageUrl: 'assets/food.jpg',
+                            imageUrl: product[index]['imageUrl'],
                           ),
                     ),
-                  );
+                  ).then((bool data) => print(data));
                 },
               )
             ],
