@@ -16,11 +16,21 @@ class Products extends StatelessWidget {
     );
   }
 
+  Widget _buildProductList() {
+    Widget productList;
+    if (product.length > 0) {
+      productList = ListView.builder(
+        itemBuilder: _buildProductItem,
+        itemCount: product.length < 4 ? product.length : 4,
+      );
+    } else {
+      productList = Center(child: Text('Add Item to Push button!'));
+    }
+    return productList;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return product.length > 0 ? ListView.builder(
-      itemBuilder: _buildProductItem,
-      itemCount: product.length < 4 ? product.length : 4,
-    ) : Center(child: Text('Add Item to Push button!'),);
+    return _buildProductList();
   }
 }
