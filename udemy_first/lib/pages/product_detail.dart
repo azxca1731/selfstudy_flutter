@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+
+  DetailPage({this.title,this.imageUrl});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Page'),
+        title: Text(title),
       ),
       body: Column(
         children: <Widget>[
-          Image.asset('assets/food.jpg'),
+          Image.asset(imageUrl),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: Text('Detail Page'),
+            child: Text(title),
           ),
           Container(
             padding: EdgeInsets.all(10.0),

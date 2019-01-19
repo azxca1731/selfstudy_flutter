@@ -22,7 +22,10 @@ class Products extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => DetailPage(),
+                      builder: (BuildContext context) => DetailPage(
+                            title: product[index],
+                            imageUrl: 'assets/food.jpg',
+                          ),
                     ),
                   );
                 },
