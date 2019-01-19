@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './pages/product_list.dart';
 import './pages/product_admin.dart';
 import './pages/product_detail.dart';
+import './pages/auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,7 +39,8 @@ class _MyAppState extends State<MyApp> {
       ),
       // home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => ProductList(product),
+        '/': (BuildContext context) => AuthPage(product),
+        '/products': (BuildContext context) => ProductList(product),
         '/admin': (BuildContext context) =>
             ProductAdmin(addProduct, deleteProduct),
       },
@@ -49,7 +51,6 @@ class _MyAppState extends State<MyApp> {
         }
         if (pathElements[1] == 'product') {
           final int index = int.parse(pathElements[2]);
-          print(index);
           return MaterialPageRoute<bool>(
             builder: (BuildContext context) => DetailPage(
                   title: product[index]['title'],

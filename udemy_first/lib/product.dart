@@ -18,7 +18,6 @@ class Products extends StatelessWidget {
               FlatButton(
                 child: Text('Detail'),
                 onPressed: () {
-                  print(index);
                   Navigator.pushNamed<bool>(
                     context,
                     '/product/' + index.toString(),
@@ -36,7 +35,6 @@ class Products extends StatelessWidget {
 
   Widget _buildProductList() {
     Widget productList;
-    print(product);
     if (product.length > 0) {
       productList = ListView.builder(
         itemBuilder: _buildProductItem,
