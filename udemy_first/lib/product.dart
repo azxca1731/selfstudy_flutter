@@ -24,7 +24,8 @@ class Products extends StatelessWidget {
         itemCount: product.length < 4 ? product.length : 4,
       );
     } else {
-      productList = Center(child: Text('Add Item to Push button!'));
+      //빈 값을 빌딩 할때 이렇게 함 빌드 메소드는 널값을 리턴하면 안됨
+      productList = Container();
     }
     return productList;
   }
