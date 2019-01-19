@@ -20,16 +20,12 @@ class Products extends StatelessWidget {
               FlatButton(
                 child: Text('Detail'),
                 onPressed: () {
-                  Navigator.push<bool>(
+                  print(index);
+                  Navigator.pushNamed<bool>(
                     context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => DetailPage(
-                            title: product[index]['title'],
-                            imageUrl: product[index]['imageUrl'],
-                          ),
-                    ),
+                    '/product/' + index.toString(),
                   ).then((bool data) {
-                    if (data) deleteProduct(data);
+                    if (data) deleteProduct(index);
                   });
                 },
               )
@@ -42,10 +38,11 @@ class Products extends StatelessWidget {
 
   Widget _buildProductList() {
     Widget productList;
+    print(product);
     if (product.length > 0) {
       productList = ListView.builder(
         itemBuilder: _buildProductItem,
-        itemCount: product.length < 4 ? product.length : 4,
+        itemCount: product.length,
       );
     } else {
       //빈 값을 빌딩 할때 이렇게 함 빌드 메소드는 널값을 리턴하면 안됨
