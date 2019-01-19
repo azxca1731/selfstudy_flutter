@@ -17,6 +17,7 @@ class DetailPage extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10.0),
             child: RaisedButton(
+              color: Theme.of(context).accentColor,
               child: Text('Back'),
               onPressed: () {
                 Navigator.pop(context);
