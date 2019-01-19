@@ -10,7 +10,16 @@ class Products extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Image.asset('assets/food.jpg'),
-          Text(product[index])
+          Text(product[index]),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                child: Text('Detail'),
+                onPressed: () {},
+              )
+            ],
+          )
         ],
       ),
     );
