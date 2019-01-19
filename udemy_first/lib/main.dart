@@ -13,11 +13,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         accentColor: Colors.deepPurple
       ),
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text('NewBie App'),
-      ),
-      body: HomePage(),
-    ));
+        home: HomePage());
   }
 }
