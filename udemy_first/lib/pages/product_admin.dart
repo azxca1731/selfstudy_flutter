@@ -41,8 +41,8 @@ class ProductAdmin extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              MyProduct(),
               ProductCreate(),
+              MyProduct(),
             ],
           )),
     );
