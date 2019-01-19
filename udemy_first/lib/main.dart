@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './pages/auth.dart';
+import './pages/product_list.dart';
+import './pages/product_admin.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,8 +12,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.deepOrange,
-        accentColor: Colors.deepPurple
+        accentColor: Colors.deepPurple,
       ),
-        home: AuthPage());
+      // home: AuthPage(),
+      routes: {
+        '/': (BuildContext context) => ProductList(),
+        '/admin': (BuildContext context) => ProductAdmin(),
+      },
+    );
   }
 }
