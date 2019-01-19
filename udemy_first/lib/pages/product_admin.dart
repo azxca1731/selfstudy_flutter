@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../product_manager.dart';
-import './product_admin.dart';
+import './product_list.dart';
 
-class ProductList extends StatelessWidget {
+class ProductAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +18,7 @@ class ProductList extends StatelessWidget {
               onTap: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ProductAdmin(),
+                      builder: (BuildContext context) => ProductList(),
                     ),
                   ),
             ),
@@ -27,9 +26,11 @@ class ProductList extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        title: Text('NewBie App'),
+        title: Text('Admin'),
       ),
-      body: ProductManager(),
+      body: Center(
+        child: Text('Put on Item on it'),
+      ),
     );
   }
 }
