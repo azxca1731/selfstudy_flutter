@@ -7,15 +7,23 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Detail Page'),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Text('Detail Page'),
-            RaisedButton(child: Text('Back'), onPressed: () {
-              Navigator.pop(context);
-            },)
-          ],
-        ),
+      body: Column(
+        children: <Widget>[
+          Image.asset('assets/food.jpg'),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Text('Detail Page'),
+          ),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: RaisedButton(
+              child: Text('Back'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
