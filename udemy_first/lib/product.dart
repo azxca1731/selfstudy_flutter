@@ -28,7 +28,9 @@ class Products extends StatelessWidget {
                             imageUrl: product[index]['imageUrl'],
                           ),
                     ),
-                  ).then((bool data) => deleteProduct(index));
+                  ).then((bool data) {
+                    if (data) deleteProduct(data);
+                  });
                 },
               )
             ],
