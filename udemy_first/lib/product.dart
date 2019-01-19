@@ -4,8 +4,9 @@ import './pages/product_detail.dart';
 
 class Products extends StatelessWidget {
   final List<Map<String, String>> product;
+  final Function deleteProduct;
 
-  Products(this.product);
+  Products(this.product, {this.deleteProduct});
 
   Widget _buildProductItem(BuildContext context, int index) {
     return Card(
@@ -27,7 +28,7 @@ class Products extends StatelessWidget {
                             imageUrl: product[index]['imageUrl'],
                           ),
                     ),
-                  ).then((bool data) => print(data));
+                  ).then((bool data) => deleteProduct(index));
                 },
               )
             ],

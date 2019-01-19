@@ -19,7 +19,7 @@ class _ProductManagerState extends State<ProductManager> {
   @override
   void initState() {
     super.initState();
-    if(widget.initialValue != null) {
+    if (widget.initialValue != null) {
       _product.add(widget.initialValue);
     }
   }
@@ -30,12 +30,23 @@ class _ProductManagerState extends State<ProductManager> {
     });
   }
 
+  void deleteProduct(int index) {
+    setState(() {
+      _product.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       Container(
           margin: EdgeInsets.all(10.0), child: ProductControl(addProduct)),
-      Expanded(child: Products(_product),)
+      Expanded(
+        child: Products(
+          _product,
+          deleteProduct: deleteProduct,
+        ),
+      )
     ]);
   }
 }
