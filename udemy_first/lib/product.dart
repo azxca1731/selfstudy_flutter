@@ -26,9 +26,21 @@ class Products extends StatelessWidget {
                     fontFamily: 'Oswald',
                   ),
                 ),
-                SizedBox(width: 8.0,),
-                 Text(
-                  product[index]['price'].toString(),
+                SizedBox(
+                  width: 8.0,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 6.0,
+                    vertical: 2.5,
+                  ),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      borderRadius: BorderRadius.circular(5.0)),
+                  child: Text(
+                    "\$${product[index]['price']}",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),
