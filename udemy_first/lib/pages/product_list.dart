@@ -7,10 +7,8 @@ class ProductList extends StatelessWidget {
 
   ProductList(this.product);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
+  Widget _buildSideDrawer(BuildContext context) {
+    return Drawer(
         child: Column(
           children: <Widget>[
             AppBar(
@@ -24,7 +22,13 @@ class ProductList extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: _buildSideDrawer(context),
       appBar: AppBar(
         title: Text('EasyList'),
         actions: <Widget>[
