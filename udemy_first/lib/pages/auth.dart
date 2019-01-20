@@ -22,7 +22,14 @@ class _AuthPageState extends State<AuthPage> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
+            image: AssetImage('assets/background.jpg'),
+          ),
+        ),
         child: ListView(
           padding: EdgeInsets.all(10.0),
           children: <Widget>[
@@ -45,14 +52,13 @@ class _AuthPageState extends State<AuthPage> {
               },
             ),
             SwitchListTile(
-              value: _acceptTerms,
-              onChanged: (bool value) {
-                setState(() {
-                  _acceptTerms = value;
-                });
-              }, 
-              title: Text('Accept Terms')
-            ),
+                value: _acceptTerms,
+                onChanged: (bool value) {
+                  setState(() {
+                    _acceptTerms = value;
+                  });
+                },
+                title: Text('Accept Terms')),
             SizedBox(
               height: 10.0,
             ),
@@ -61,8 +67,8 @@ class _AuthPageState extends State<AuthPage> {
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {
-                if(_idValue.length == 0 || _passwordValue.length ==0 ){}
-                else {
+                if (_idValue.length == 0 || _passwordValue.length == 0) {
+                } else {
                   Navigator.pushReplacementNamed(context, '/products');
                 }
               },

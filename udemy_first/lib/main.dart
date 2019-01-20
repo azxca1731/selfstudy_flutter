@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/rendering.dart';
 
 import './pages/product_list.dart';
 import './pages/product_admin.dart';
 import './pages/product_detail.dart';
 import './pages/auth.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // debugPaintSizeEnabled = true;
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -63,8 +67,7 @@ class _MyAppState extends State<MyApp> {
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(
-          builder: (BuildContext context) =>
-              ProductList(product),
+          builder: (BuildContext context) => ProductList(product),
         );
       },
     );
