@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../product_manager.dart';
+import '../widgets/products/products.dart';
 
 class ProductList extends StatelessWidget {
   final List<Map<String, dynamic>> product;
 
   ProductList(this.product);
-
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +18,7 @@ class ProductList extends StatelessWidget {
               title: Text('Choose'),
             ),
             ListTile(
+              leading: Icon(Icons.edit),
               title: Text('Products Management'),
               onTap: () => Navigator.pushReplacementNamed(context, '/admin'),
             ),
@@ -26,9 +26,15 @@ class ProductList extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        title: Text('NewBie App'),
+        title: Text('EasyList'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.favorite),
+            onPressed: (){},
+          )
+        ],
       ),
-      body: ProductManager(product),
+      body: Products(product),
     );
   }
 }

@@ -26,54 +26,70 @@ class _AuthPageState extends State<AuthPage> {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.5), BlendMode.dstATop),
             image: AssetImage('assets/background.jpg'),
           ),
         ),
-        child: ListView(
-          padding: EdgeInsets.all(10.0),
-          children: <Widget>[
-            TextField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(labelText: 'ID'),
-              onChanged: (String value) {
-                setState(() {
-                  _idValue = value;
-                });
-              },
+        padding: EdgeInsets.all(10.0),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'ID',
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  onChanged: (String value) {
+                    setState(() {
+                      _idValue = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  onChanged: (String value) {
+                    setState(() {
+                      _passwordValue = value;
+                    });
+                  },
+                ),
+                SwitchListTile(
+                    value: _acceptTerms,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _acceptTerms = value;
+                      });
+                    },
+                    title: Text('Accept Terms')),
+                SizedBox(
+                  height: 10.0,
+                ),
+                RaisedButton(
+                  child: Text('Login'),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (_idValue.length == 0 || _passwordValue.length == 0) {
+                    } else {
+                      Navigator.pushReplacementNamed(context, '/products');
+                    }
+                  },
+                ),
+              ],
             ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
-              onChanged: (String value) {
-                setState(() {
-                  _passwordValue = value;
-                });
-              },
-            ),
-            SwitchListTile(
-                value: _acceptTerms,
-                onChanged: (bool value) {
-                  setState(() {
-                    _acceptTerms = value;
-                  });
-                },
-                title: Text('Accept Terms')),
-            SizedBox(
-              height: 10.0,
-            ),
-            RaisedButton(
-              child: Text('Login'),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                if (_idValue.length == 0 || _passwordValue.length == 0) {
-                } else {
-                  Navigator.pushReplacementNamed(context, '/products');
-                }
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );

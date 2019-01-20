@@ -60,6 +60,9 @@ class _MyAppState extends State<MyApp> {
             builder: (BuildContext context) => DetailPage(
                   title: product[index]['title'],
                   imageUrl: product[index]['imageUrl'],
+                  description: product[index]['description'],
+                  address: 'Hwaseong, Suwon',
+                  price: product[index]['price']
                 ),
           );
         }
