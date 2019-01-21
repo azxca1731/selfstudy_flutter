@@ -78,23 +78,23 @@ class _ProductCreateState extends State<ProductCreate> {
           SizedBox(
             height: 10.0,
           ),
-          GestureDetector(
-            onTap: _submitForm,
-            child: Container(
-              child: Text(
-                'save',
-                style: TextStyle(color: Colors.white, fontSize: 20.0),
-                textAlign: TextAlign.center,
-              ),
-              color: Colors.green,
-            ),
-          ),
-          // RaisedButton(
-          //   child: Text('Save'),
-          //   color: Theme.of(context).accentColor,
-          //   textColor: Colors.white,
-          //   onPressed: _submitForm,
+          // GestureDetector(
+          //   onTap: _submitForm,
+          //   child: Container(
+          //     child: Text(
+          //       'save',
+          //       style: TextStyle(color: Colors.white, fontSize: 20.0),
+          //       textAlign: TextAlign.center,
+          //     ),
+          //     color: Colors.green,
+          //   ),
           // ),
+          RaisedButton(
+            child: Text('Save'),
+            color: Theme.of(context).accentColor,
+            textColor: Colors.white,
+            onPressed: _submitForm,
+          ),
         ],
       ),
     );
