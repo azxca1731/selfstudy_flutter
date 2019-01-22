@@ -9,6 +9,22 @@ class MyProduct extends StatelessWidget {
 
   MyProduct(this.product, this.updateProduct, this.deleteProduct);
 
+  Widget _buildEditButton(BuildContext context, int index) {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (BuildContext context) {
+          return ProductEditPage(
+            product: product[index],
+            updateProduct: updateProduct,
+            productIndex: index,
+          );
+        }));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -17,7 +33,7 @@ class MyProduct extends StatelessWidget {
           key: Key(product[index]['title']),
           background: Container(color: Colors.red),
           onDismissed: (DismissDirection direction) {
-            if(direction == DismissDirection.endToStart) {
+            if (direction == DismissDirection.endToStart) {
               deleteProduct(index);
             }
           },
@@ -29,19 +45,7 @@ class MyProduct extends StatelessWidget {
                 ),
                 title: Text(product[index]['title']),
                 subtitle: Text('\$${product[index]["price"]}'),
-                trailing: IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return ProductEditPage(
-                        product: product[index],
-                        updateProduct: updateProduct,
-                        productIndex: index,
-                      );
-                    }));
-                  },
-                ),
+                trailing: _buildEditButton(context, index),
               ),
               Divider()
             ],
