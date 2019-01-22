@@ -19,17 +19,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, dynamic>> product = [];
+  List<Map<String, dynamic>> _product = [];
 
-  void addProduct(Map<String, dynamic> addedProduct) {
+  void _addProduct(Map<String, dynamic> addedProduct) {
     setState(() {
-      product.add(addedProduct);
+      _product.add(addedProduct);
     });
   }
 
-  void deleteProduct(int index) {
+  void _deleteProduct(int index) {
     setState(() {
-      product.removeAt(index);
+      _product.removeAt(index);
+    });
+  }
+
+  void _updateProduct(int index, Map<String, dynamic> product) {
+    setState(() {
+      _product[index] = product;
     });
   }
 
@@ -37,18 +43,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.deepOrange,
-        accentColor: Colors.deepPurple,
-        fontFamily: 'Oswald',
-        buttonColor: Colors.deepPurple
-      ),
+          brightness: Brightness.light,
+          primarySwatch: Colors.deepOrange,
+          accentColor: Colors.deepPurple,
+          fontFamily: 'Oswald',
+          buttonColor: Colors.deepPurple),
       // home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => AuthPage(product),
-        '/products': (BuildContext context) => ProductList(product),
+        '/': (BuildContext context) => AuthPage(_product),
+        '/products': (BuildContext context) => ProductList(_product),
         '/admin': (BuildContext context) =>
-            ProductAdmin(addProduct, deleteProduct),
+            ProductAdmin(_addProduct, _updateProduct, _deleteProduct, _product),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
@@ -59,19 +64,18 @@ class _MyAppState extends State<MyApp> {
           final int index = int.parse(pathElements[2]);
           return MaterialPageRoute<bool>(
             builder: (BuildContext context) => DetailPage(
-                  title: product[index]['title'],
-                  imageUrl: product[index]['imageUrl'],
-                  description: product[index]['description'],
-                  address: 'Hwaseong, Suwon',
-                  price: product[index]['price']
-                ),
+                title: _product[index]['title'],
+                imageUrl: _product[index]['imageUrl'],
+                description: _product[index]['description'],
+                address: 'Hwaseong, Suwon',
+                price: _product[index]['price']),
           );
         }
         return null;
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(
-          builder: (BuildContext context) => ProductList(product),
+          builder: (BuildContext context) => ProductList(_product),
         );
       },
     );
