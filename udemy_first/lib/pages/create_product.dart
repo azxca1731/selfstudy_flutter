@@ -21,8 +21,8 @@ class _ProductCreateState extends State<ProductCreate> {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Production Title'),
       validator: (String value) {
-        if(value.isEmpty) {
-          return 'Title is required';
+        if (value.isEmpty || value.length < 5) {
+          return 'Title is required and should be 5+ characters long.';
         }
       },
       onSaved: (String value) {
@@ -36,8 +36,13 @@ class _ProductCreateState extends State<ProductCreate> {
   Widget _buildDescriptionTextField() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Production Description'),
+      validator: (String value) {
+        if (value.isEmpty || value.length < 5) {
+          return 'Decoration is required and should be 10+ characters long.';
+        }
+      },
       maxLines: 4,
-       onSaved: (String value) {
+      onSaved: (String value) {
         setState(() {
           _descriptionValue = value;
         });
@@ -49,7 +54,12 @@ class _ProductCreateState extends State<ProductCreate> {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Production Value'),
       keyboardType: TextInputType.number,
-       onSaved: (String value) {
+      validator: (String value) {
+        if(value.isEmpty || !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
+          return 'Price is required and should be a number.';
+        }
+      },
+      onSaved: (String value) {
         setState(() {
           _priceValue = double.parse(value);
         });
@@ -58,7 +68,7 @@ class _ProductCreateState extends State<ProductCreate> {
   }
 
   void _submitForm() {
-    if(!_formKey.currentState.validate()){
+    if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
