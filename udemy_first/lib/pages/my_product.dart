@@ -12,22 +12,30 @@ class MyProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          // leading: Image.asset(product[index]['imageUrl']),
-          title: Text(product[index]['title']),
-          trailing: IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return ProductEditPage(
-                  product: product[index],
-                  updateProduct: updateProduct,
-                  productIndex: index,
-                );
-              }));
-            },
-          ),
+        return Column(
+          children: <Widget>[
+            ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage(product[index]['imageUrl']),
+              ),
+              title: Text(product[index]['title']),
+              subtitle: Text('\$${product[index]["price"]}'),
+              trailing: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return ProductEditPage(
+                      product: product[index],
+                      updateProduct: updateProduct,
+                      productIndex: index,
+                    );
+                  }));
+                },
+              ),
+            ),
+            Divider()
+          ],
         );
       },
       itemCount: product.length,

@@ -35,7 +35,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
       child: TextFormField(
         focusNode: _titleFocusNode,
         decoration: InputDecoration(labelText: 'Production Title'),
-        initialValue: widget.product == null ? '' : widget.product['title '],
+        initialValue: widget.product == null ? '' : widget.product['title'],
         validator: (String value) {
           if (value.isEmpty || value.length < 5) {
             return 'Title is required and should be 5+ characters long.';
