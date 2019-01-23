@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
-  final List<Map<String, dynamic>> product;
-
-  AuthPage(this.product);
 
   @override
   State<StatefulWidget> createState() {

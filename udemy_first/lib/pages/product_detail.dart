@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import '../widgets/ui_elements/title_default.dart';
 
 class DetailPage extends StatelessWidget {
-  final String imageUrl;
+  final String image;
   final String title;
   final String description;
   final String address;
   final double price;
 
   DetailPage(
-      {this.title, this.imageUrl, this.address, this.description, this.price});
+      {this.title, this.image, this.address, this.description, this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class DetailPage extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Image.asset(imageUrl),
+            Image.asset(image),
             Container(
               padding: EdgeInsets.all(10.0),
               child: TitleDefault(title),
