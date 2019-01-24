@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import '../widgets/products/products.dart';
+import '../scoped-models/main.dart';
 
 class ProductList extends StatelessWidget {
   Widget _buildSideDrawer(BuildContext context) {
@@ -28,10 +30,15 @@ class ProductList extends StatelessWidget {
       appBar: AppBar(
         title: Text('EasyList'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: (){},
-          )
+          ScopedModelDescendant<MainModel>(builder: (BuildContext context, Widget child,MainModel model) {
+            return IconButton(
+            icon: Icon(model.showFavorite ? Icons.favorite : Icons.favorite_border),
+            onPressed: (){
+              model.toggleShowFavorite();
+            },
+          );
+          },),
+          
         ],
       ),
       body: Products(),

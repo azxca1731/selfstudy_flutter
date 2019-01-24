@@ -2,16 +2,28 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../models/product.dart';
 
-class ProductModel extends Model {
+mixin ProductModel on Model {
   List<Product> _products = [];
   int _selectedProductIndex;
+  bool _showFavorite = false;
 
   List<Product> get products {
     return List.from(_products);
   }
 
+  List<Product> get displayedProducts {
+    if(_showFavorite){
+      return _products.where((Product item) => item.isFavorite).toList();
+    }
+    return List.from(_products);
+  }
+
   int get selectedProductIndex {
     return _selectedProductIndex;
+  }
+
+  bool get showFavorite {
+    return _showFavorite;
   }
 
   Product get selectedProduct {
@@ -49,6 +61,11 @@ class ProductModel extends Model {
       isFavorite: !selectedProduct.isFavorite,
     );
     _selectedProductIndex = null;
+    notifyListeners();
+  }
+
+  void toggleShowFavorite() {
+    _showFavorite = !_showFavorite;
     notifyListeners();
   }
 }

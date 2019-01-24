@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import '../scoped-models/products.dart';
+import '../scoped-models/main.dart';
 import '../models/product.dart';
 import '../widgets/ui_elements/title_default.dart';
 
@@ -16,8 +16,8 @@ class DetailPage extends StatelessWidget {
     return WillPopScope(onWillPop: () {
       Navigator.pop(context, false);
       return Future.value(false);
-    }, child: ScopedModelDescendant<ProductModel>(
-      builder: (BuildContext context, Widget child, ProductModel model) {
+    }, child: ScopedModelDescendant<MainModel>(
+      builder: (BuildContext context, Widget child, MainModel model) {
         final Product product = model.products[productIndex];
         return Scaffold(
           appBar: AppBar(
