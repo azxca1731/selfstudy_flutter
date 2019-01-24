@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import './product_card.dart';
 import '../../models/product.dart';
+import '../../scoped-models/products.dart';
 
 class Products extends StatelessWidget {
-  final List<Product> product;
-  final Function deleteProduct;
-
-  Products(this.product, {this.deleteProduct});
-
-  Widget _buildProductList() {
+  Widget _buildProductList(List<Product> products) {
     Widget productList;
-    if (product.length > 0) {
+    if (products.length > 0) {
       productList = ListView.builder(
         itemBuilder: (BuildContext context, int index) =>
-            ProductCard(product[index], index),
-        itemCount: product.length,
+            ProductCard(products[index], index),
+        itemCount: products.length,
       );
     } else {
       //빈 값을 빌딩 할때 이렇게 함 빌드 메소드는 널값을 리턴하면 안됨
@@ -26,10 +23,10 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Expanded(
-        child: _buildProductList(),
-      )
-    ]);
+    return ScopedModelDescendant<ProductModel>(
+      builder: (BuildContext context, Widget child, ProductModel model) {
+        return _buildProductList(model.products);
+      },
+    );
   }
 }

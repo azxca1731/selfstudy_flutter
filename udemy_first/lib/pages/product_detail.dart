@@ -1,66 +1,66 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
+import '../scoped-models/products.dart';
+import '../models/product.dart';
 import '../widgets/ui_elements/title_default.dart';
 
 class DetailPage extends StatelessWidget {
-  final String image;
-  final String title;
-  final String description;
-  final String address;
-  final double price;
+  final int productIndex;
 
-  DetailPage(
-      {this.title, this.image, this.address, this.description, this.price});
+  DetailPage(this.productIndex);
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        Navigator.pop(context, false);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Column(
-          children: <Widget>[
-            Image.asset(image),
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: TitleDefault(title),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  address,
-                  style: TextStyle(color: Colors.grey),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Text(
-                    '|',
+    return WillPopScope(onWillPop: () {
+      Navigator.pop(context, false);
+      return Future.value(false);
+    }, child: ScopedModelDescendant<ProductModel>(
+      builder: (BuildContext context, Widget child, ProductModel model) {
+        final Product product = model.products[productIndex];
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(model.products[productIndex].title),
+          ),
+          body: Column(
+            children: <Widget>[
+              Image.asset(model.products[productIndex].image),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: TitleDefault(model.products[productIndex].title),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Maetan, Suwon',
                     style: TextStyle(color: Colors.grey),
                   ),
-                ),
-                Text(
-                  '\$${price.toString()}',
-                  style: TextStyle(color: Colors.grey),
-                )
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                description,
-                textAlign: TextAlign.center,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Text(
+                      '|',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  Text(
+                    '\$${product.price.toString()}',
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  model.products[productIndex].description,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ));
   }
 }

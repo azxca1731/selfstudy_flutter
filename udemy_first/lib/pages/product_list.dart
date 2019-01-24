@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/products/products.dart';
-import '../models/product.dart';
 
 class ProductList extends StatelessWidget {
-  final List<Product> product;
-
-  ProductList(this.product);
-
   Widget _buildSideDrawer(BuildContext context) {
     return Drawer(
         child: Column(
@@ -39,7 +34,7 @@ class ProductList extends StatelessWidget {
           )
         ],
       ),
-      body: Products(product),
+      body: Products(),
     );
   }
 }
