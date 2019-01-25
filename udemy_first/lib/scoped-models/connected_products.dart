@@ -1,5 +1,9 @@
-import 'package:scoped_model/scoped_model.dart';
+import 'dart:convert';
 
+import 'package:scoped_model/scoped_model.dart';
+import 'package:http/http.dart' as http;
+
+import '../config.dart' as config;
 import '../models/product.dart';
 import '../models/user.dart';
 
@@ -10,15 +14,34 @@ mixin ConnectedProductsModel on Model {
 
   void addProduct(
       String title, String description, String image, double price) {
-    final Product newProduct = Product(
-        title: title,
-        description: description,
-        image: image,
-        price: price,
-        userEmail: _authenticatedUser.email,
-        userId: _authenticatedUser.id);
-    _products.add(newProduct);
-    notifyListeners();
+    final Map<String, dynamic> sendingProduct = {
+      'title': title,
+      'description': description,
+      'image':
+          'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/9/17/1/WU0605H_Chocolate-Devils-Ganache_s4x3.jpg.rend.hgtvcom.826.620.suffix/1383787110354.jpeg',
+      'price': price,
+    };
+
+    http
+        .post('${config.firebaseDB}/products.json',
+            body: json.encode(sendingProduct))
+        .then(
+      (http.Response response) {
+        final Map<String, dynamic> responseJson = json.decode(response.body);
+        print(responseJson);
+
+        final Product newProduct = Product(
+            id: responseJson['name'],
+            title: title,
+            description: description,
+            image: image,
+            price: price,
+            userEmail: _authenticatedUser.email,
+            userId: _authenticatedUser.id);
+        _products.add(newProduct);
+        notifyListeners();
+      },
+    );
   }
 }
 
@@ -96,7 +119,8 @@ mixin ProductsModel on ConnectedProductsModel {
 }
 
 mixin UserModel on ConnectedProductsModel {
-    void login(String email, String password) {
-    _authenticatedUser = User(id: 'fdalsdfasf', email: email, password: password);
+  void login(String email, String password) {
+    _authenticatedUser =
+        User(id: 'fdalsdfasf', email: email, password: password);
   }
 }

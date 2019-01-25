@@ -28,6 +28,9 @@
 .pub/
 build/
 
+# MyConfigfile
+*/config.dart
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
