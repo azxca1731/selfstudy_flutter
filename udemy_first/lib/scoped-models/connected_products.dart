@@ -20,6 +20,8 @@ mixin ConnectedProductsModel on Model {
       'image':
           'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/9/17/1/WU0605H_Chocolate-Devils-Ganache_s4x3.jpg.rend.hgtvcom.826.620.suffix/1383787110354.jpeg',
       'price': price,
+      'userEmail': _authenticatedUser.email,
+      'userId': _authenticatedUser.id,
     };
 
     http
@@ -77,6 +79,7 @@ mixin ProductsModel on ConnectedProductsModel {
   void updateProduct(
       String title, String description, String image, double price) {
     final Product updatedProduct = Product(
+        id: selectedProduct.id,
         title: title,
         description: description,
         image: image,
@@ -92,10 +95,35 @@ mixin ProductsModel on ConnectedProductsModel {
     notifyListeners();
   }
 
+  void fetchProducts() {
+    http
+        .get('${config.firebaseDB}/products.json')
+        .then((http.Response response) {
+      final List<Product> responseProductList = [];
+      final Map<String, dynamic> responseProductMap =
+          json.decode(response.body);
+      responseProductMap.forEach((String productKey, dynamic productMap) {
+        final Product product = Product(
+          id: productKey,
+          title: productMap['title'],
+          description: productMap['description'],
+          image: productMap['image'],
+          price: productMap['price'],
+          userEmail: productMap['userEmail'],
+          userId: productMap['userId'],
+        );
+        responseProductList.add(product);
+      });
+      _products = responseProductList;
+      notifyListeners();
+    });
+  }
+
   void toggleProductFavoriteStatus() {
     final bool isCurrentlyFavorite = selectedProduct.isFavorite;
     final bool newFavoriteStatus = !isCurrentlyFavorite;
     final Product updatedProduct = Product(
+        id: selectedProduct.id,
         title: selectedProduct.title,
         description: selectedProduct.description,
         price: selectedProduct.price,
