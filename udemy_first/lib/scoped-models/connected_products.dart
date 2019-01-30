@@ -16,8 +16,8 @@ mixin ConnectedProductsModel on Model {
 
   Future<Null> addProduct(
       String title, String description, String image, double price) {
-        _isLoading = true;
-        notifyListeners();
+    _isLoading = true;
+    notifyListeners();
     final Map<String, dynamic> sendingProduct = {
       'title': title,
       'description': description,
@@ -28,7 +28,6 @@ mixin ConnectedProductsModel on Model {
       'userId': _authenticatedUser.id,
     };
 
-    
     return http
         .post('${config.firebaseDB}/products.json',
             body: json.encode(sendingProduct))
@@ -82,18 +81,36 @@ mixin ProductsModel on ConnectedProductsModel {
     return _showFavorites;
   }
 
-  void updateProduct(
+  Future<Null> updateProduct(
       String title, String description, String image, double price) {
-    final Product updatedProduct = Product(
-        id: selectedProduct.id,
-        title: title,
-        description: description,
-        image: image,
-        price: price,
-        userEmail: selectedProduct.userEmail,
-        userId: selectedProduct.userId);
-    _products[selectedProductIndex] = updatedProduct;
+    _isLoading = true;
     notifyListeners();
+    final Map<String, dynamic> updateData = {
+      'title': title,
+      'description': description,
+      'image':
+          'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2013/9/17/1/WU0605H_Chocolate-Devils-Ganache_s4x3.jpg.rend.hgtvcom.826.620.suffix/1383787110354.jpeg',
+      'price': price,
+      'userEmail': selectedProduct.userEmail,
+      'userId': selectedProduct.userId
+    };
+    return http
+        .put('${config.firebaseDB}/products/${selectedProduct.id}.json',
+            body: json.encode(updateData))
+        .then((http.Response response) {
+      _isLoading = false;
+      final Product updatedProduct = Product(
+          id: selectedProduct.id,
+          title: title,
+          description: description,
+          image: image,
+          price: price,
+          userEmail: selectedProduct.userEmail,
+          userId: selectedProduct.userId);
+      _products[selectedProductIndex] = updatedProduct;
+      notifyListeners();
+    });
+    ;
   }
 
   void deleteProduct() {
@@ -109,7 +126,8 @@ mixin ProductsModel on ConnectedProductsModel {
         .then((http.Response response) {
       _isLoading = false;
       final List<Product> responseProductList = [];
-      final Map<String, dynamic> responseProductMap = json.decode(response.body);
+      final Map<String, dynamic> responseProductMap =
+          json.decode(response.body);
       if (responseProductMap == null) {
         _isLoading = false;
         notifyListeners();

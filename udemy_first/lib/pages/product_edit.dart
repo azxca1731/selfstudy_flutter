@@ -92,7 +92,9 @@ class _ProductEditPageState extends State<ProductEditPage> {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return model.isLoading
-            ? Center(child: CircularProgressIndicator(),)
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
             : RaisedButton(
                 child: Text('Save'),
                 textColor: Colors.white,
@@ -164,7 +166,8 @@ class _ProductEditPageState extends State<ProductEditPage> {
         _formData['description'],
         _formData['image'],
         _formData['price'],
-      );
+      ).then((_) => Navigator.pushReplacementNamed(context, '/products')
+          .then((_) => setSelectedProduct(null)));
     }
   }
 
