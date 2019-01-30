@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
@@ -11,9 +12,12 @@ mixin ConnectedProductsModel on Model {
   List<Product> _products = [];
   int _selProductIndex;
   User _authenticatedUser;
+  bool _isLoading = false;
 
-  void addProduct(
+  Future<Null> addProduct(
       String title, String description, String image, double price) {
+        _isLoading = true;
+        notifyListeners();
     final Map<String, dynamic> sendingProduct = {
       'title': title,
       'description': description,
@@ -24,11 +28,13 @@ mixin ConnectedProductsModel on Model {
       'userId': _authenticatedUser.id,
     };
 
-    http
+    
+    return http
         .post('${config.firebaseDB}/products.json',
             body: json.encode(sendingProduct))
         .then(
       (http.Response response) {
+        _isLoading = false;
         final Map<String, dynamic> responseJson = json.decode(response.body);
         print(responseJson);
 
@@ -96,12 +102,19 @@ mixin ProductsModel on ConnectedProductsModel {
   }
 
   void fetchProducts() {
+    _isLoading = true;
+    notifyListeners();
     http
         .get('${config.firebaseDB}/products.json')
         .then((http.Response response) {
+      _isLoading = false;
       final List<Product> responseProductList = [];
-      final Map<String, dynamic> responseProductMap =
-          json.decode(response.body);
+      final Map<String, dynamic> responseProductMap = json.decode(response.body);
+      if (responseProductMap == null) {
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
       responseProductMap.forEach((String productKey, dynamic productMap) {
         final Product product = Product(
           id: productKey,
@@ -115,6 +128,7 @@ mixin ProductsModel on ConnectedProductsModel {
         responseProductList.add(product);
       });
       _products = responseProductList;
+      _isLoading = false;
       notifyListeners();
     });
   }
@@ -150,5 +164,11 @@ mixin UserModel on ConnectedProductsModel {
   void login(String email, String password) {
     _authenticatedUser =
         User(id: 'fdalsdfasf', email: email, password: password);
+  }
+}
+
+mixin UtilityModel on ConnectedProductsModel {
+  bool get isLoading {
+    return _isLoading;
   }
 }
